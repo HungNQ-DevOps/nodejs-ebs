@@ -1,10 +1,14 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import { router as imageRoutes } from './routes/imageRoutes.js';
+import { createLogger, transports } from "winston";
 
 
   // Init the Express application
   const app = express();
+  const logger = createLogger({
+    transports: new transports.Console
+    });
 
   // Set the network port
   const port = process.env.PORT || 8080;
@@ -42,6 +46,6 @@ import { router as imageRoutes } from './routes/imageRoutes.js';
 
   // Start the Server
   app.listen( port, () => {
-      console.log( `server running http://localhost:${ port }` );
-      console.log( `press CTRL+C to stop server` );
+    logger.info( `server running http://localhost:${ port }` );
+    logger.info( `press CTRL+C to stop server` );
   } );
